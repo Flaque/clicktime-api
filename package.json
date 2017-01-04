@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "jest": "^18.1.0",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "reqwest": "^2.0.5"
   },
   "scripts": {
     "start": "gulp",
@@ -19,11 +19,14 @@
     "babelify": "^7.3.0",
     "browser-sync": "^2.18.5",
     "browserify": "^13.1.1",
+    "fs-jetpack": "^0.10.5",
     "gulp": "^3.9.1",
     "gulp-cli": "^1.2.2",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^3.0.0",
     "gulp-webserver": "^0.9.1",
+    "jest": "^18.1.0",
+    "mustache": "^2.3.0",
     "sassify": "^2.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.8.0"
