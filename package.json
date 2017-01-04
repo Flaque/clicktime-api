@@ -11,6 +11,7 @@
   "scripts": {
     "start": "gulp",
     "test": "jest",
+    "test-watch": "jest --watch",
     "create": "node scripts/create/create.js"
   },
   "devDependencies": {

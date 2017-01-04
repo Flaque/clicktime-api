@@ -1,0 +1,13 @@
+{
+  "ClickTimeAPI" : {
+    "base" : "https://clicktime.herokuapp.com/api/1.0",
+    "routes" : {
+      "session" : "/Session",
+      "companies" : "/Companies",
+      "users" : "/Users",
+      "clients" : "/Clients",
+      "jobs" : "/Jobs",
+      "tasks" : "/Tasks"
+    }
+  }
+}
