@@ -73,6 +73,19 @@ function _createTaskReferenceObjects(jobs, tasks) {
 }
 
 /**
+ * Gets all Tasks
+ */
+function getAllTasks(companyID, userID) {
+
+  return Q.all([getJobs(companyID, userID, true), getTasks(companyID, userID)])
+    .then((allData) => { // all will combine datasets from both requests
+      let jobs = allData[0]
+      let tasks = allData[1]
+      return _createTaskReferenceObjects(jobs, tasks)
+    })
+}
+
+/**
  * Gets the session (for User and CompanyID)
  * @return Promise
  */
@@ -98,19 +111,6 @@ function getJobs(companyID, userID, withChildIDs) {
 function getTasks(companyID, userID) {
   let url = _urlWithAuth(companyID, userID, API.routes.tasks)
   return _get(url).then(_convertTasksToObject)
-}
-
-/**
- * Gets all Tasks
- */
-function getAllTasks(companyID, userID) {
-
-  return Q.all([getJobs(companyID, userID, true), getTasks(companyID, userID)])
-    .then((allData) => { // all will combine datasets from both requests
-      let jobs = allData[0]
-      let tasks = allData[1]
-      return _createTaskReferenceObjects(jobs, tasks)
-    })
 }
 
 export { getSession, getJobs, getTasks, getAllTasks }
