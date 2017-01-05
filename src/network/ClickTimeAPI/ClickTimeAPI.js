@@ -65,7 +65,11 @@ function _createTaskReferenceObjects(jobs, tasks) {
   jobs.forEach( (job) => {
     job.PermittedTasks.split(",").forEach( (taskId) => {
       if (!taskId) return
-      tasks[taskId].job = job
+      if (tasks[taskId].job !== undefined) {
+        tasks[taskId].job.push(job)
+      } else {
+        tasks[taskId].job = [job]
+      }
     })
   })
 
