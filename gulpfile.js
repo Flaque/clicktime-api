@@ -11,6 +11,7 @@ var gutil = require('gulp-util')
 var path = {
   HTML: 'src/index.html',
   ENTRY: './src/index.js',
+  JSX: './src/**/*.jsx',
   OUT: 'build.js',
   SCSS: './src/**/*.scss',
   CSS_OUT: 'build.css',
@@ -19,8 +20,7 @@ var path = {
   DEST_HTML: './build/index.html',
 };
 
-// Main input
-var bundler = watchify(browserify({entries: path.ENTRY, extensions: ['.jsx']})
+var bundler = watchify(browserify({entries: path.ENTRY, extension: ['jsx']})
   .transform(babelify))
 bundler.on('update', bundle)
 
@@ -76,6 +76,7 @@ gulp.task('serve', ['bundle', 'sass', 'copy'], () => {
 
   gulp.watch(path.DEST_HTML).on('change', browserSync.reload)
   gulp.watch(path.SCSS, ['sass'])
+  gulp.watch(path.JSX, ['bundle'])
 })
 
 // Just running the watch task
