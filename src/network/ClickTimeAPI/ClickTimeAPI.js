@@ -1,6 +1,6 @@
 import reqwest from 'reqwest'; // Similar to AJAX in jQuery
 import CONFIG from '../../../config.json';
-import Q from 'q' // Using CommonJS promises for simplicity sake
+import Q from 'q'; // Using CommonJS promises for simplicity sake
 const API = CONFIG.ClickTimeAPI;
 
 /**

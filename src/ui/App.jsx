@@ -1,15 +1,32 @@
 import React from 'react';
+import {getSession} from '../network/ClickTimeAPI/ClickTimeAPI';
+import TaskWidget from './TaskWidget/TaskWidget.jsx'
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {isLoggedIn : false}
+  }
+
   componentDidMount() {
-    // TODO Load in jobs
+    getSession().then( (data) => {
+      this.setState({
+        credentials : {userID: data.UserID, companyID: data.CompanyID },
+        isLoggedIn : true
+      })
+    })
   }
 
   render() {
+    const isLoggedIn = this.state.isLoggedIn
     return (
       <div id="App">
-        Hello World!
+        {isLoggedIn ? (
+          <TaskWidget credentials={this.state.credentials} />
+        ) : (
+          <p> Logging in...</p>
+        )}
       </div>
     )
   }
