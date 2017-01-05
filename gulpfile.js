@@ -34,7 +34,6 @@ function bundle() {
     .on('error', (err) => {
       gutil.log(err.message)
       browserSync.notify("Browserify Error!")
-      this.emit("end")
     })
     .pipe(source(path.MINIFIED_OUT))
     .pipe(gulp.dest(path.DEST))
