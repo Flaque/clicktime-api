@@ -1,5 +1,6 @@
 import reqwest from 'reqwest'; // Similar to AJAX in jQuery
 import CONFIG from '../../../config.json';
+import Q from 'q' // Using CommonJS promises for simplicity sake
 const API = CONFIG.ClickTimeAPI;
 
 /**
@@ -17,7 +18,7 @@ function _get(url, params) {
 
   return reqwest({
     url: url,
-    params: params,
+    data: params,
     type: 'jsonp'
   })
 }
@@ -34,6 +35,41 @@ function _urlWithAuth(companyID, userID, route) {
   let company = `${API.routes.companies}/${companyID}` // `/companies/EX8MPLE`
   let user = `${API.routes.users}/${userID}`  // `/users/EX8MPLE`
   return `${API.base}${company}${user}${route}` // Full path
+}
+
+/**
+ * Converts Tasks data to an object with Name keys that can be accessed
+ * in O(1) time. We can abuse the fact that the tasks have unique names.
+ *
+ * Ex:
+ * {
+ *  "2ZJ6Ug40lXrI" : { <task_data> },
+ *  ...
+ * }
+ *
+ * @return JSON
+ */
+function _convertTasksToObject(data) {
+  var dict = {}
+  data.forEach((item) => { dict[item.TaskID] = item })
+  return dict
+}
+
+/**
+ * Creates a list of objects with task names as keys and
+ * all the information (including their job object) as data.
+ *
+ * @return [JSON, ..., JSON]
+ */
+function _createTaskReferenceObjects(jobs, tasks) {
+  jobs.forEach( (job) => {
+    job.PermittedTasks.split(",").forEach( (taskId) => {
+      if (!taskId) return
+      tasks[taskId].job = job
+    })
+  })
+
+  return tasks
 }
 
 /**
@@ -61,7 +97,20 @@ function getJobs(companyID, userID, withChildIDs) {
  */
 function getTasks(companyID, userID) {
   let url = _urlWithAuth(companyID, userID, API.routes.tasks)
-  return _get(url)
+  return _get(url).then(_convertTasksToObject)
 }
 
-export { getSession, getJobs, getTasks }
+/**
+ * Gets all Tasks
+ */
+function getAllTasks(companyID, userID) {
+
+  return Q.all([getJobs(companyID, userID, true), getTasks(companyID, userID)])
+    .then((allData) => { // all will combine datasets from both requests
+      let jobs = allData[0]
+      let tasks = allData[1]
+      return _createTaskReferenceObjects(jobs, tasks)
+    })
+}
+
+export { getSession, getJobs, getTasks, getAllTasks }
