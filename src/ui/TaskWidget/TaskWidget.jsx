@@ -7,25 +7,33 @@ const getNameIdPairs = function(taskDict) {
   for (let id in taskDict) {
     pairs.push({
       name: taskDict[id].Name,
-      id: id
+      id: id,
+      isLoaded: false
     })
   }
   return pairs
 }
-
 
 class TaskWidget extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { tasks: {}, namePairs: [] }
+    this.load()
   }
 
-  componentDidMount() {
+  /**
+   * Loads Tasks Async
+   */
+  load() {
     const creds = this.props.credentials
     getAllTasks(creds.companyID, creds.userID)
       .then( (data) => {
-        this.setState({tasks: data, namePairs: getNameIdPairs(data) })
+        this.setState({
+          tasks: data,
+          namePairs: getNameIdPairs(data),
+          isLoaded: true
+        })
        })
   }
 
@@ -33,7 +41,11 @@ class TaskWidget extends React.Component {
     return (
       <div className="taskWidget card">
         <h3> Tasks </h3>
-        <Search items={ this.state.namePairs }/>
+        {this.state.isLoaded ? (
+          <Search items={ this.state.namePairs }/>
+        ) : (
+          <p> Getting things ready... </p>
+        )}
       </div>
     )
   }
