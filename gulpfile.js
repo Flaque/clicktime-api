@@ -67,7 +67,7 @@ gulp.task('serve', ['sass', 'copy', 'bundle'], () => {
   })
 
   gulp.watch(path.DEST_HTML).on('change', browserSync.reload)
-  gulp.watch(path.SCSS).on('change', ['sass'])
+  gulp.watch(path.SCSS, ['sass'])
 })
 
 // Just running the watch task
