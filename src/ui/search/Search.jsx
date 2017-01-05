@@ -1,6 +1,6 @@
 import React from 'react';
 import Autocomplete from 'react-autocomplete';
-import './Search.scss';
+import {matchTerm} from './util.js'
 
 class Search extends React.Component {
 
@@ -23,13 +23,6 @@ class Search extends React.Component {
     )
   }
 
-  matchTerm (item, value) {
-    if (!value) return true // Treat empty string as a wildcard
-    return (
-      item.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
-    )
-  }
-
   render() {
     return (
       <div className="search">
@@ -39,7 +32,7 @@ class Search extends React.Component {
           items = {this.props.items}
           getItemValue = { (item) => item.name }
           renderItem = {this.renderItem}
-          shouldItemRender={this.matchTerm}
+          shouldItemRender={matchTerm}
           onChange = { (event, value) => {
             this.setState({ value })
           }}
