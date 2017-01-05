@@ -1,29 +1,25 @@
 var gulp = require('gulp');
 var source = require('vinyl-source-stream'); // Used to stream bundle for further handling
 var browserify = require('browserify');
-var sassify = require('sassify');
 var watchify = require('watchify');
 var browserSync = require('browser-sync').create();
 var babelify = require('babelify').configure({"presets": ["es2015", "react"]});
+var sass = require('gulp-sass');
+var concat = require('gulp-concat');
 
 var path = {
   HTML: 'src/index.html',
   ENTRY: './src/index.js',
   OUT: 'build.js',
   SCSS: './src/**/*.scss',
+  CSS_OUT: 'build.css',
   MINIFIED_OUT: 'build.min.js',
   DEST: './build',
   DEST_HTML: './build/index.html',
 };
 
 // Main input
-var bundler = watchify(browserify(path.ENTRY)
-  .transform(babelify)
-  .transform(sassify, {
-    'auto-inject': true, // Inject css directly in the code
-    base64Encode: false, // Use base64 to inject css
-    sourceMap: false // Add source map to the code
-  }))
+var bundler = watchify(browserify(path.ENTRY).transform(babelify))
 bundler.on('update', bundle)
 
 /**
@@ -34,11 +30,23 @@ function bundle() {
     .on('error', console.error)
     .pipe(source(path.MINIFIED_OUT))
     .pipe(gulp.dest(path.DEST))
-    .pipe(browserSync.stream({once:true}))
+    .pipe(browserSync.stream())
 }
 
 gulp.task('bundle', () => {
   bundle()
+})
+
+/**
+ * Sass
+ */
+
+gulp.task('sass', () => {
+  return gulp.src(path.SCSS)
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(concat(path.CSS_OUT))
+    .pipe(gulp.dest(path.DEST))
+    .pipe(browserSync.stream())
 })
 
 /**
@@ -52,13 +60,14 @@ gulp.task('copy', () => {
 /**
  * Launches server, watches files.
  */
-gulp.task('serve', ['copy', 'bundle'], () => {
+gulp.task('serve', ['sass', 'copy', 'bundle'], () => {
 
   browserSync.init({
     server: path.DEST
   })
 
   gulp.watch(path.DEST_HTML).on('change', browserSync.reload)
+  gulp.watch(path.SCSS).on('change', ['sass'])
 })
 
 // Just running the watch task
