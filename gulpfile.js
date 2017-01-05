@@ -6,6 +6,7 @@ var browserSync = require('browser-sync').create();
 var babelify = require('babelify').configure({"presets": ["es2015", "react"]});
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
+var gutil = require('gulp-util')
 
 var path = {
   HTML: 'src/index.html',
@@ -19,18 +20,25 @@ var path = {
 };
 
 // Main input
-var bundler = watchify(browserify(path.ENTRY).transform(babelify))
+var bundler = watchify(browserify({entries: path.ENTRY, extensions: ['.jsx']})
+  .transform(babelify))
 bundler.on('update', bundle)
 
 /**
  * Bundles
  */
 function bundle() {
+  gutil.log('Compiling JS...');
+
   return bundler.bundle()
-    .on('error', console.error)
+    .on('error', (err) => {
+      gutil.log(err.message)
+      browserSync.notify("Browserify Error!")
+      this.emit("end")
+    })
     .pipe(source(path.MINIFIED_OUT))
     .pipe(gulp.dest(path.DEST))
-    .pipe(browserSync.stream())
+    .pipe(browserSync.stream({once: true}))
 }
 
 gulp.task('bundle', () => {
@@ -60,7 +68,7 @@ gulp.task('copy', () => {
 /**
  * Launches server, watches files.
  */
-gulp.task('serve', ['sass', 'copy', 'bundle'], () => {
+gulp.task('serve', ['bundle', 'sass', 'copy'], () => {
 
   browserSync.init({
     server: path.DEST
