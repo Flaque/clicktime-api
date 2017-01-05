@@ -6,6 +6,7 @@
   "dependencies": {
     "fast-memoize": "^2.0.2",
     "react": "^15.4.1",
+    "react-autocomplete": "^1.4.0",
     "react-dom": "^15.4.1",
     "reqwest": "^2.0.5"
   },
@@ -29,9 +30,9 @@
     "gulp-webserver": "^0.9.1",
     "jest": "^18.1.0",
     "mustache": "^2.3.0",
+    "react-test-renderer": "^15.4.1",
     "sassify": "^2.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.8.0",
-    "react-test-renderer": "^15.4.1"
+    "watchify": "^3.8.0"
   }
 }
