@@ -86,10 +86,13 @@ function createFiles(parameters) {
   // Create the component structure
   jetpack.cwd(CONFIG.path)
     .dir(name.lowercaseFirstLetter())
-      .file(`${name}.jsx`, {content: getReactBoilerplate(name)})
-      .file(`${name}.scss`, {content: getSassBoilerplate(name)})
+      .file(`${name.capitalizeFirstLetter()}.jsx`,
+        {content: getReactBoilerplate(name)})
+      .file(`${name.capitalizeFirstLetter()}.scss`, 
+        {content: getSassBoilerplate(name)})
       .dir('__test__')
-        .file(`${name}.spec.js`, {content: getTestBoilerplate(name)})
+        .file(`${name.capitalizeFirstLetter()}.spec.js`,
+          {content: getTestBoilerplate(name)})
 }
 
 /**
