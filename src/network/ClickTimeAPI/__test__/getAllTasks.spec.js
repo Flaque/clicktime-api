@@ -9,8 +9,13 @@ describe('getAllTasks', () => {
       .then( (data) => {
         let anyTask = data[Object.keys(data)[0]]
         expect(anyTask.hasOwnProperty('Name')).toBeTruthy()
+
+        // Jobs exist
         expect(anyTask.hasOwnProperty('jobs')).toBeTruthy()
         expect(Array.isArray(anyTask.jobs)).toBeTruthy()
+
+        // Client exists within job
+        expect(anyTask.jobs[0].hasOwnProperty('client'))
       })
       .fail((err, msg) => {
         console.error(msg)

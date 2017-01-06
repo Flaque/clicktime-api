@@ -38,7 +38,7 @@ function _urlWithAuth(companyID, userID, route) {
 }
 
 /**
- * Converts Tasks data to an object with Name keys that can be accessed
+ * Converts Client or Task data to an object with Name keys that can be accessed
  * in O(1) time. We can abuse the fact that the tasks have unique names.
  *
  * Ex:
@@ -49,10 +49,22 @@ function _urlWithAuth(companyID, userID, route) {
  *
  * @return JSON
  */
-function _convertTasksToObject(data) {
+function _convertDataArrayToObject(data, key) {
   var dict = {}
-  data.forEach((item) => { dict[item.TaskID] = item })
+  data.forEach((item) => { dict[item[key]] = item })
   return dict
+}
+
+function _assignJobToPermittedTasks(job, tasks, clients) {
+  job.PermittedTasks.split(",").forEach( (taskId) => {
+    if (!taskId) return
+    if (tasks[taskId].jobs !== undefined) {
+      tasks[taskId].jobs.push(job)
+    } else {
+      tasks[taskId].jobs = [job]
+    }
+  })
+  return tasks
 }
 
 /**
@@ -61,16 +73,10 @@ function _convertTasksToObject(data) {
  *
  * @return [JSON, ..., JSON]
  */
-function _createTaskReferenceObjects(jobs, tasks) {
+function _createTaskWidgetInfo(jobs, tasks, clients) {
   jobs.forEach( (job) => {
-    job.PermittedTasks.split(",").forEach( (taskId) => {
-      if (!taskId) return
-      if (tasks[taskId].jobs !== undefined) {
-        tasks[taskId].jobs.push(job)
-      } else {
-        tasks[taskId].jobs = [job]
-      }
-    })
+    job.client = clients[job.ClientID]
+    tasks = _assignJobToPermittedTasks(job, tasks)
   })
 
   return tasks
@@ -81,11 +87,15 @@ function _createTaskReferenceObjects(jobs, tasks) {
  */
 function getAllTasks(companyID, userID) {
 
-  return Q.all([getJobs(companyID, userID, true), getTasks(companyID, userID)])
+  return Q.all([
+      getJobs(companyID, userID, true),
+      getTasks(companyID, userID),
+      getClients(companyID, userID)])
     .then((allData) => { // all will combine datasets from both requests
       let jobs = allData[0]
       let tasks = allData[1]
-      return _createTaskReferenceObjects(jobs, tasks)
+      let clients = allData[2]
+      return _createTaskWidgetInfo(jobs, tasks, clients)
     })
 }
 
@@ -115,7 +125,7 @@ function getJobs(companyID, userID, withChildIDs) {
  */
 function getClients(companyID, userID) {
   let url = _urlWithAuth(companyID, userID, API.routes.clients)
-  return _get(url)
+  return _get(url).then( (data) => _convertDataArrayToObject(data, 'ClientID'))
 }
 
 /**
@@ -124,7 +134,7 @@ function getClients(companyID, userID) {
  */
 function getTasks(companyID, userID) {
   let url = _urlWithAuth(companyID, userID, API.routes.tasks)
-  return _get(url).then(_convertTasksToObject)
+  return _get(url).then((data) => _convertDataArrayToObject(data, 'TaskID'))
 }
 
 export { getSession, getJobs, getTasks, getAllTasks, getClients }
