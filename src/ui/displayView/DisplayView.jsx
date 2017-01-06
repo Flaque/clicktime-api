@@ -13,7 +13,7 @@ class DisplayView extends React.Component {
           {job.DisplayName}
         </div>
         <div className="six columns">
-          BMW
+          {job.client.DisplayName}
         </div>
       </div>
     )
