@@ -2,11 +2,6 @@ import React from 'react';
 
 class DisplayView extends React.Component {
 
-  constructor(props) {
-    super(props)
-    console.log(this.props.selectedTask)
-  }
-
   renderJobs() {
     if (!this.props.selectedTask.jobs) {
       return ( <p> Nothing! </p>)
@@ -14,14 +9,11 @@ class DisplayView extends React.Component {
 
     return this.props.selectedTask.jobs.map( (job) =>
       <div className="row content" key={job.JobID} >
-        <div className="four columns">
+        <div className="six columns">
           {job.DisplayName}
         </div>
-        <div className="four columns">
+        <div className="six columns">
           BMW
-        </div>
-        <div className="four columns">
-          ❌
         </div>
       </div>
     )
@@ -33,14 +25,11 @@ class DisplayView extends React.Component {
 
         {/* Headers */}
         <div className="row">
-          <div className="four columns">
+          <div className="six columns">
             <h6 className="upper light"> Job </h6>
           </div>
-          <div className="four columns">
+          <div className="six columns">
             <h6 className="upper light"> Client </h6>
-          </div>
-          <div className="four columns">
-            <h6 className="upper light"> Recent? </h6>
           </div>
         </div>
 
