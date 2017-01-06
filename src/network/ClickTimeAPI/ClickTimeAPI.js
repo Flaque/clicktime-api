@@ -109,6 +109,16 @@ function getJobs(companyID, userID, withChildIDs) {
 }
 
 /**
+ * Gets clients for the companyID and userID:
+ *
+ * @return Promise
+ */
+function getClients(companyID, userID) {
+  let url = _urlWithAuth(companyID, userID, API.routes.clients)
+  return _get(url)
+}
+
+/**
  * Gets tasks for the companyID and userID:
  * <base>/Companies/<companyID>/Users/<userID>/tasks
  */
@@ -117,4 +127,4 @@ function getTasks(companyID, userID) {
   return _get(url).then(_convertTasksToObject)
 }
 
-export { getSession, getJobs, getTasks, getAllTasks }
+export { getSession, getJobs, getTasks, getAllTasks, getClients }
