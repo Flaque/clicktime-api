@@ -1,6 +1,7 @@
 import React from 'react';
 import {getSession} from '../network/ClickTimeAPI/ClickTimeAPI';
-import TaskWidget from './TaskWidget/TaskWidget.jsx'
+import TaskWidget from './TaskWidget/TaskWidget.jsx';
+import Loader from './loader/Loader.jsx';
 
 class App extends React.Component {
 
@@ -25,7 +26,7 @@ class App extends React.Component {
         {isLoggedIn ? (
           <TaskWidget credentials={this.state.credentials} />
         ) : (
-          <p> Logging in...</p>
+          <Loader loaderMessage="Pretending to Login..."/>
         )}
       </div>
     )

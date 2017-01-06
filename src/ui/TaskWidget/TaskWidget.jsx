@@ -1,6 +1,7 @@
 import React from 'react';
 import Search from '../search/Search.jsx'
 import DisplayView from '../displayView/DisplayView.jsx'
+import Loader from '../loader/Loader.jsx'
 import {getAllTasks} from '../../network/ClickTimeAPI/ClickTimeAPI';
 
 const getNameIdPairs = function(taskDict) {
@@ -60,7 +61,7 @@ class TaskWidget extends React.Component {
             </div>
           </div>
         ) : (
-          <p> Getting things ready... </p>
+          <Loader loaderMessage="Spinning up hamster..."/>
         )}
       </div>
     )

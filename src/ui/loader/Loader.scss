@@ -1,0 +1,30 @@
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#loader {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .nob {
+    width: 20px;
+    height: 30px;
+    background: white;
+    border-radius: 50px; // Make as round as possible
+    margin: auto;
+
+    &.pulse {
+      animation: pulse 1s infinite;
+    }
+  }
+}
