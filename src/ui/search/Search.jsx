@@ -9,6 +9,7 @@ class Search extends React.Component {
     this.state = {
       value: ''
     }
+    this.onSelect = this.onSelect.bind(this)
   }
 
   renderItem(item, isHighlighted) {
@@ -21,6 +22,11 @@ class Search extends React.Component {
         id = {item.id}
       >{item.name}</div>
     )
+  }
+
+  onSelect(value, item) {
+    this.setState({ value })
+    this.props.onSelect(item.id)
   }
 
   render() {
@@ -36,9 +42,7 @@ class Search extends React.Component {
           onChange = { (event, value) => {
             this.setState({ value })
           }}
-          onSelect = { value => {
-            this.setState({ value })
-          }}
+          onSelect = {this.onSelect}
         />
       </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react';
 import Search from '../search/Search.jsx'
+import DisplayView from '../displayView/DisplayView.jsx'
 import {getAllTasks} from '../../network/ClickTimeAPI/ClickTimeAPI';
 
 const getNameIdPairs = function(taskDict) {
@@ -7,8 +8,7 @@ const getNameIdPairs = function(taskDict) {
   for (let id in taskDict) {
     pairs.push({
       name: taskDict[id].Name,
-      id: id,
-      isLoaded: false
+      id: id
     })
   }
   return pairs
@@ -18,8 +18,9 @@ class TaskWidget extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { tasks: {}, namePairs: [] }
+    this.state = { selectedTask: {}, tasks: {}, namePairs: [] }
     this.load()
+    this.passUpSelection = this.passUpSelection.bind(this)
   }
 
   /**
@@ -37,12 +38,20 @@ class TaskWidget extends React.Component {
        })
   }
 
+  passUpSelection(id) {
+    this.setState({ selectedTask: this.state.tasks[id] })
+  }
+
   render() {
     return (
       <div className="taskWidget card">
         <h3> Tasks </h3>
         {this.state.isLoaded ? (
-          <Search items={ this.state.namePairs }/>
+          <div className="taskWidget___content">
+            <Search items={ this.state.namePairs }
+              onSelect={ this.passUpSelection.bind(this) } />
+            <DisplayView selectedTask={ this.state.selectedTask } />
+          </div>
         ) : (
           <p> Getting things ready... </p>
         )}

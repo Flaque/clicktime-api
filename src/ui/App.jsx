@@ -19,7 +19,7 @@ class App extends React.Component {
   }
 
   render() {
-    const isLoggedIn = this.state.isLoggedIn
+    let isLoggedIn = this.state.isLoggedIn
     return (
       <div id="App">
         {isLoggedIn ? (
