@@ -1,6 +1,26 @@
 @import './lib/rottie.scss';
 @import './ui/ui.scss';
 
+@mixin linear-gradient($direction, $color-stops...) {
+  background: nth(nth($color-stops, 1), 1);
+  background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
+  background: linear-gradient($direction, $color-stops);
+}
+
+html {
+  @include linear-gradient(#3498db, #8e44ad);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.card {
+  background: white;
+}
+
 #root {
 
   // Center
@@ -10,4 +30,8 @@
 
   // Size
   height: 100%;
+
+  .container {
+    max-width: 500px;
+  }
 }

@@ -5,7 +5,7 @@
  * https://github.com/dhg/Skeleton
  */
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:200,300');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:200,300,600');
 
 /* Variables
 ------------------------*/
@@ -16,13 +16,16 @@ $border-radius: 3px;
 $fonts: "Open Sans", sans;
 
 $soft-gray-color: #ddd;
+$gray-color: #bbb;
 $main-color: #3498db;
 $dark-main-color: #2980b9;
+
+$box-shadow: 0 2px 3px rgba(240, 240, 240, 0.1), 0 0 0 1px rgba(240, 240, 240, 0.1);
 
 /* Mixins
 ------------------------*/
 @mixin is--lifted() {
-  box-shadow: 0 2px 3px rgba(100, 100, 100, 0.1), 0 0 0 1px rgba(100, 100, 100, 0.1);
+  box-shadow: $box-shadow;
 }
 
 @mixin placeholder {
@@ -61,6 +64,10 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.4rem;
     letter-spacing: .2rem;
     font-weight: 600;
+  }
+
+  &.light {
+    color: $gray-color;
   }
 }
 
@@ -186,6 +193,17 @@ p { margin-top: 0; }
   .offset-by-one-half.columns     { margin-left: 52%; }
 
 }
+
+/* Clearing
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Self Clearing Goodness */
+.container:after,
+.row:after,
+.u-cf {
+  content: "";
+  display: table;
+  clear: both; }
 
 
 /* Inputs

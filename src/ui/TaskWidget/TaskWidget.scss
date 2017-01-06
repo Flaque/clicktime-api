@@ -1,0 +1,28 @@
+.taskWidget {
+  transition: height 0.2s;
+
+  .header {
+    height: 50px;
+
+    h1,h2,h3,h4,h5,h6 {
+      float: left;
+      color: white;
+    }
+
+    .search {
+      float: right;
+    }
+
+    input {
+      border: none;
+
+      &.card {
+        border: none;
+
+        &:focus {
+          border: none;
+        }
+      }
+    }
+  }
+}

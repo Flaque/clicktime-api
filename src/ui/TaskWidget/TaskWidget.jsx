@@ -44,13 +44,20 @@ class TaskWidget extends React.Component {
 
   render() {
     return (
-      <div className="taskWidget card">
-        <h3> Tasks </h3>
+      <div className="taskWidget container">
+
         {this.state.isLoaded ? (
-          <div className="taskWidget___content">
-            <Search items={ this.state.namePairs }
-              onSelect={ this.passUpSelection.bind(this) } />
-            <DisplayView selectedTask={ this.state.selectedTask } />
+
+          <div>
+            <div className="header">
+              <h4> Tasks </h4>
+              <Search items={ this.state.namePairs }
+                onSelect={ this.passUpSelection.bind(this) } />
+            </div>
+
+            <div className="card">
+              <DisplayView selectedTask={ this.state.selectedTask } />
+            </div>
           </div>
         ) : (
           <p> Getting things ready... </p>

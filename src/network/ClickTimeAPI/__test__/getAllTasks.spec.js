@@ -9,8 +9,8 @@ describe('getAllTasks', () => {
       .then( (data) => {
         let anyTask = data[Object.keys(data)[0]]
         expect(anyTask.hasOwnProperty('Name')).toBeTruthy()
-        expect(anyTask.hasOwnProperty('job')).toBeTruthy()
-        expect(Array.isArray(anyTask.job)).toBeTruthy()
+        expect(anyTask.hasOwnProperty('jobs')).toBeTruthy()
+        expect(Array.isArray(anyTask.jobs)).toBeTruthy()
       })
       .fail((err, msg) => {
         console.error(msg)

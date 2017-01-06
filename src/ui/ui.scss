@@ -1,2 +1,6 @@
 @import './search/Search.scss';
 @import './taskWidget/TaskWidget.scss';
+
+#App {
+  min-width: 500px;
+}
