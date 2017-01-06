@@ -55,6 +55,12 @@ function _convertDataArrayToObject(data, key) {
   return dict
 }
 
+/**
+ * Assign this job to all of the tasks that it
+ * has listed under "PermittedTasks".
+ *
+ * @return JSON tasks dict
+ */
 function _assignJobToPermittedTasks(job, tasks, clients) {
   job.PermittedTasks.split(",").forEach( (taskId) => {
     if (!taskId) return
