@@ -51,7 +51,9 @@ class DisplayView extends React.Component {
    */
   renderEmpty() {
     return (
-      <div className="empty-warning"> Type in a task! </div>
+      <div className="display-empty">
+        <i className="fa fa-cube" aria-hidden="true"></i>
+      </div>
     )
   }
 

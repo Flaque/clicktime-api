@@ -1932,7 +1932,7 @@ flagged-respawn@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/flagged-respawn/-/flagged-respawn-0.3.2.tgz#ff191eddcd7088a675b2610fffc976be9b8074b5"
 
-font-awesome@^4.7.0:
+font-awesome@^4.4.0, font-awesome@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/font-awesome/-/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
@@ -3718,6 +3718,12 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-font-awesome@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/node-font-awesome/-/node-font-awesome-1.0.2.tgz#756c686b496fec8f327d09e965ac72042f4f394b"
+  dependencies:
+    font-awesome "^4.4.0"
 
 node-gyp@^3.3.1:
   version "3.4.0"

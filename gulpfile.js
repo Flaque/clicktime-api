@@ -6,7 +6,8 @@ var browserSync = require('browser-sync').create();
 var babelify = require('babelify').configure({"presets": ["es2015", "react"]});
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
-var gutil = require('gulp-util')
+var gutil = require('gulp-util');
+var fontAwesome = require('node-font-awesome');
 
 var path = {
   HTML: 'src/index.html',
@@ -47,7 +48,6 @@ gulp.task('bundle', () => {
 /**
  * Sass
  */
-
 gulp.task('sass', () => {
   return gulp.src(path.SCSS)
     .pipe(sass.sync().on('error', sass.logError))
@@ -55,6 +55,11 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(path.DEST))
     .pipe(browserSync.stream())
 })
+
+gulp.task('fonts', function() {
+  gulp.src(fontAwesome.fonts)
+    .pipe(gulp.dest('./build/fonts'));
+});
 
 /**
  * Copys the HTML over to the build
@@ -67,7 +72,7 @@ gulp.task('copy', () => {
 /**
  * Launches server, watches files.
  */
-gulp.task('serve', ['bundle', 'sass', 'copy'], () => {
+gulp.task('serve', ['fonts', 'bundle', 'sass', 'copy'], () => {
 
   browserSync.init({
     server: path.DEST

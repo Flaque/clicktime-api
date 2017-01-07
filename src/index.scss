@@ -1,6 +1,8 @@
 @import './lib/rottie.scss';
 @import './ui/ui.scss';
 
+@import '../node_modules/font-awesome/scss/font-awesome';
+
 @mixin linear-gradient($direction, $color-stops...) {
   background: nth(nth($color-stops, 1), 1);
   background: -webkit-linear-gradient(legacy-direction($direction), $color-stops);
@@ -32,6 +34,6 @@ html, body {
   height: 100%;
 
   .container {
-    max-width: 500px;
+    width: 400px;
   }
 }
