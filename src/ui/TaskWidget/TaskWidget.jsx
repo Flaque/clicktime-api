@@ -4,7 +4,13 @@ import DisplayView from '../displayView/DisplayView.jsx'
 import Loader from '../loader/Loader.jsx'
 import {getAllTasks} from '../../network/ClickTimeAPI/ClickTimeAPI';
 
-const getNameIdPairs = function(taskDict) {
+/**
+ * Creates an array of {name, id} pairs from the
+ * task data object
+ *
+ * @return array
+ */
+const _getNameIdPairs = function(taskDict) {
   let pairs = []
   for (let id in taskDict) {
     pairs.push({
@@ -17,15 +23,8 @@ const getNameIdPairs = function(taskDict) {
 
 class TaskWidget extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = { selectedTask: {}, tasks: {}, namePairs: [] }
-    this.load()
-    this.passUpSelection = this.passUpSelection.bind(this)
-  }
-
   /**
-   * Loads Tasks Async
+   * Loads Tasks asynchronously and then updates the state.
    */
   load() {
     const creds = this.props.credentials
@@ -33,14 +32,23 @@ class TaskWidget extends React.Component {
       .then( (data) => {
         this.setState({
           tasks: data,
-          namePairs: getNameIdPairs(data),
+          namePairs: _getNameIdPairs(data),
           isLoaded: true
         })
        })
   }
 
-  passUpSelection(id) {
+  /**
+   * Selects a specific task
+   */
+  selectTask(id) {
     this.setState({ selectedTask: this.state.tasks[id] })
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = { selectedTask: {}, tasks: {}, namePairs: [] }
+    this.load()
   }
 
   render() {
@@ -53,7 +61,7 @@ class TaskWidget extends React.Component {
             <div className="header">
               <h4> Tasks </h4>
               <Search items={ this.state.namePairs }
-                onSelect={ this.passUpSelection.bind(this) } />
+                onSelect={ this.selectTask.bind(this) } />
             </div>
 
             <div className="card">
