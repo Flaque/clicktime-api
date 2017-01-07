@@ -2,4 +2,9 @@
   cursor: pointer;
   padding: 5px;
   padding-left: 10px;
+
+  &.searchItem--highlighted {
+    background: #3498db;
+    color: white;
+  }
 }
