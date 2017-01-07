@@ -1,0 +1,35 @@
+exports[`test Test that DisplayView is still the same 1`] = `
+<div
+  className="displayView">
+  <div>
+    <div
+      className="row">
+      <div
+        className="six columns">
+        <h6
+          className="upper light">
+           Job 
+        </h6>
+      </div>
+      <div
+        className="six columns">
+        <h6
+          className="upper light">
+           Client 
+        </h6>
+      </div>
+    </div>
+    <div
+      className="row content">
+      <div
+        className="six columns">
+        job
+      </div>
+      <div
+        className="six columns">
+        client
+      </div>
+    </div>
+  </div>
+</div>
+`;

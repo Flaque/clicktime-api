@@ -2,6 +2,9 @@ import React from 'react';
 import Loader from '../Loader.jsx';
 import renderer from 'react-test-renderer';
 
-test('TODO: write test for Loader', () => {
-  expect(1).toBe(4); // Will fail.
+test('Test that Loader is still the same', () => {
+  const tree = renderer.create(
+    <Loader loaderMessage="test load" />
+  ).toJSON();
+  expect(tree).toMatchSnapshot();
 })

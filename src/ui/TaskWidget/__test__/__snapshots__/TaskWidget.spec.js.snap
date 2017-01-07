@@ -1,0 +1,16 @@
+exports[`test Test that TaskWidget is still the same 1`] = `
+<div
+  className="taskWidget container">
+  <div
+    id="loader">
+    <div
+      className="loader-content">
+      <h4>
+        Logging in...
+      </h4>
+      <div
+        className="nob pulse" />
+    </div>
+  </div>
+</div>
+`;

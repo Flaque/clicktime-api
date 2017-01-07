@@ -26,7 +26,7 @@ class App extends React.Component {
         {isLoggedIn ? (
           <TaskWidget credentials={this.state.credentials} />
         ) : (
-          <Loader loaderMessage="Pretending to Login..."/>
+          <Loader loaderMessage="Logging in..."/>
         )}
       </div>
     )

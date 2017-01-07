@@ -1,0 +1,24 @@
+exports[`test Test that Search is still the same 1`] = `
+<div
+  className="search">
+  <div
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }>
+    <input
+      aria-autocomplete="list"
+      autoComplete="off"
+      onBlur={[Function]}
+      onChange={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      placeholder="Type a task!"
+      role="combobox"
+      value="" />
+  </div>
+</div>
+`;

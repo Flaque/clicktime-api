@@ -61,7 +61,7 @@ class TaskWidget extends React.Component {
             </div>
           </div>
         ) : (
-          <Loader loaderMessage="Spinning up hamster..."/>
+          <Loader loaderMessage="Logging in..."/>
         )}
       </div>
     )
