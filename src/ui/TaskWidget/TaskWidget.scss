@@ -1,8 +1,15 @@
+@import '../../lib/animations.scss';
+
+
 .taskWidget {
-  transition: height 0.2s;
+
+  .card {
+    @include fadein(0.9s);
+  }
 
   .header {
     height: 50px;
+    @include fadein(0.9s);
 
     h1,h2,h3,h4,h5,h6 {
       float: left;
